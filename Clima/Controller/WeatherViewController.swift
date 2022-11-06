@@ -7,8 +7,10 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
+class WeatherViewController: UIViewController, UITextFieldDelegate {
 
+    var weatherManager = WeatherManager()
+    
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -21,13 +23,13 @@ class WeatherViewController: UIViewController, UITextViewDelegate, UITextFieldDe
     
     @IBAction func searchPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
-        print(searchTextField.text!)    //fetch text data from search bar
+        //print(searchTextField.text!)    //fetch text data from search bar
     }
     
     //asks the delegate whether to process the return command given by user via the keyboard
     func textFieldShouldReturn(_ textField: UITextField)  -> Bool {
         searchTextField.endEditing(true)
-        print(searchTextField.text!)
+        //print(searchTextField.text!)
         return true
     }
     
@@ -43,6 +45,9 @@ class WeatherViewController: UIViewController, UITextViewDelegate, UITextFieldDe
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         //use user I/P to fetch weather data.
+        if let city = searchTextField.text {
+            weatherManager.fetchWeather(cityName: city)
+        }
     }
 }
 
